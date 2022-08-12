@@ -66,6 +66,17 @@ const Home = ({ route }) => {
     if (currentURL) onFileDownload(currentURL);
   }, [currentURL]);
 
+  useEffect(() => {
+    let timeout = setTimeout(() => {
+      onMusicStandardChange(level);
+      onMusicStandardChangeAction(level);
+    }, 500)
+
+    return () => {
+      clearTimeout(timeout)
+    }
+  }, [level])
+
   const stopDownload = () => {
     if (state.jobID !== null) {
       RNFS.stopDownload(state.jobID);
@@ -116,7 +127,7 @@ const Home = ({ route }) => {
         console.log("ALREADY DOWNLOADED PATH ", isExist);
         setlocalData({
           audioUrl: isExist,
-          Title: allData[index].Title,
+          Title: allData[level].Title,
         });
         _hideDownloadModal();
         return;
@@ -369,8 +380,6 @@ const Home = ({ route }) => {
             onIndexPress={index => {
               // setState({ ...state, index: index });
               dispatch(setLevel(index));
-              onMusicStandardChange(index);
-              // onMusicStandardChangeAction(index);
             }}
           />
           <Text

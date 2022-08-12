@@ -23,7 +23,7 @@ import CustomAlert from "../../components/CustomAlert";
 import FontFamily from "../../res/FontFamily";
 import Toast from "../../helper/toast";
 import Loader from "../../components/Loader";
-import {setUser} from "../../redux/reducers/user";
+import { setUser } from "../../redux/reducers/user";
 
 export default () => {
   const colors = initColors;
@@ -77,7 +77,7 @@ export default () => {
 
   function isValidForm() {
     let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-    let _name = name.trim(), _email = email.trim()
+    let _name = name.trim(), _email = email.trim();
     if (_name.length == 0) {
       Toast.showError("Please enter your registered name");
       return false;
@@ -88,8 +88,8 @@ export default () => {
       Toast.showError("Please enter valid email id");
       return false;
     }
-    setEmail(_email)
-    setName(_name)
+    setEmail(_email);
+    setName(_name);
     return true;
   }
 
@@ -131,7 +131,7 @@ export default () => {
           },
         );
       }
-    }, 100)
+    }, 100);
   };
 
   useFocusEffect(
@@ -139,6 +139,12 @@ export default () => {
       // alert('Use your teachable username and email address to sign-in. NO PASSWORD WILL BE REQUIRED!!')
     }, []),
   );
+
+  const userData = useSelector(s => s.user);
+
+  useEffect(() => {
+    console.log({userData})
+  }, [userData]);
 
   const onForgotPasswordPressed = () => {
     setModalVisible(true);
@@ -177,6 +183,7 @@ export default () => {
       <View style={{ flex: 1 }}>
         <View style={styles.semiCircle} />
 
+        <Text style={{ ...styles.labelStyle, ...{fontSize: 12} }}>Please enter the same name and email that you entered to access your courses.</Text>
         <Text style={styles.labelStyle}>Username</Text>
         <TextInput
           placeholder=""
